@@ -54,7 +54,7 @@ export const hideLoading=()=>{
 }
 export const clearError=()=>{
     return{
-        type:SHOW_ERROR
+        type:  CLEAR_ERROR
     }
 }
 export const showError=(error)=>{

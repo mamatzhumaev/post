@@ -3,7 +3,6 @@ import { deleteComments } from '../Redux/Action'
 import { useDispatch } from 'react-redux'
 
 const SingleComments = (props) => {
-  console.log("props>>>",props)
   const [comments,setComments,]= useState('')
   const {title,id}=props
   const dispatch=useDispatch()

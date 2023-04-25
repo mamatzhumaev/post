@@ -1,11 +1,12 @@
 import React, { useState,useEffect,useCallback } from "react";
 import uniqid from "uniqid";
 import { useSelector, useDispatch } from "react-redux";
-import { addComments,getPostComment,showError,hideLoading, } from "../Redux/Action";
+import { addComments, getPostComment } from "../Redux/Action";
 import { deleteComments } from "../Redux/Action";
 import SingleComments from "./Single-comments";
 import {getPost} from "../Services/Services";
 import { showError,hideLoading,showLoading,clearError } from "../Redux/Action";
+import Loading from './Loading';
 
 const Comments = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,36 @@ const Comments = () => {
     setInput("");
   };
 
+  const loadPost=useCallback(async()=>{
+    dispatch (showLoading())
+    dispatch(clearError())
+    try{
+       const data=await getPost()
+       console.log("data>>",data)
+       dispatch(getPostComment(data.data))
+    }catch(error){
+     dispatch(showError("Что то пошло не так"))
+    }finally{
+      dispatch(hideLoading())
+    }
+  },[])  
+  useEffect(()=>{
+    loadPost()
+  },[])
+
+  if(loading){
+    return<Loading/>
+    
+  }
+
+  if (error){
+    return(
+      <div>
+        <p>{error}</p>
+        <button onClick={loadPost}>Повторить</button>
+      </div>
+    )
+  }
   return (
     <div className="card-comments">
       <form onSubmit={handleSubmit}>

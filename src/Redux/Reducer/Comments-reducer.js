@@ -44,7 +44,7 @@ export const CommentReducer = (state = initialState, action) => {
     case HIDE_LOADING:{
         return{
             ...state,
-            true:false
+            loading:false
         }
     }
     case SHOW_ERROR:{
